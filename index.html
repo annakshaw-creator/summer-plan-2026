@@ -8,236 +8,112 @@
   <title>Summer Plan 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #f5f5f3;
       color: #1a1a1a;
       min-height: 100vh;
-      padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
     }
-
-    /* ── Header & tabs ── */
     .header {
       background: #fff;
       padding: 14px 16px 0;
+      padding-top: max(14px, env(safe-area-inset-top));
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid #e8e8e8;
-      padding-top: max(14px, env(safe-area-inset-top));
     }
-    .header h1 {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .tabs {
-      display: flex;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
+    .header h1 { font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+    .tabs { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .tabs::-webkit-scrollbar { display: none; }
     .tab {
-      flex-shrink: 0;
-      padding: 10px 16px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      color: #999;
-      border-bottom: 2px solid transparent;
-      transition: color .15s, border-color .15s;
+      flex-shrink: 0; padding: 10px 16px; border: none; background: transparent;
+      cursor: pointer; font-size: 14px; font-weight: 500; color: #999;
+      border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
       -webkit-tap-highlight-color: transparent;
     }
     .tab.on { color: #1a1a1a; border-bottom-color: #1a1a1a; }
-
-    /* ── Panes ── */
     .pane { display: none; padding: 14px 16px; }
     .pane.on { display: block; }
-
-    /* ── Top toolbar ── */
-    .toolbar {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-      padding: 10px 16px 2px;
-    }
+    .toolbar { display: flex; gap: 8px; justify-content: flex-end; padding: 10px 16px 2px; }
     .btn {
-      padding: 7px 14px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      background: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      color: #333;
-      -webkit-tap-highlight-color: transparent;
+      padding: 7px 14px; border-radius: 8px; border: 1px solid #ddd;
+      background: #fff; font-size: 13px; font-weight: 500; cursor: pointer;
+      color: #333; -webkit-tap-highlight-color: transparent;
     }
     .btn.primary { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-    .btn.danger  { color: #c0392b; border-color: #f5c6c2; background: #fff8f7; }
-
-    /* ── Edit banner ── */
     .edit-banner {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      padding: 9px 16px;
-      background: #fffbf0;
-      border-bottom: 1px solid #f0e4c0;
-      font-size: 13px;
-      color: #7a5010;
+      display: none; align-items: center; justify-content: space-between;
+      padding: 9px 16px; background: #fffbf0; border-bottom: 1px solid #f0e4c0;
+      font-size: 13px; color: #7a5010;
     }
     .edit-banner.on { display: flex; }
 
-    /* ── Week rows ── */
-    .wrow {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .wnum {
-      font-size: 11px;
-      color: #bbb;
-      min-width: 32px;
-      padding-top: 11px;
-      flex-shrink: 0;
-    }
+    /* Week rows */
+    .wrow { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+    .wnum { font-size: 11px; color: #bbb; min-width: 32px; padding-top: 11px; flex-shrink: 0; }
     .wcard {
-      flex: 1;
-      border-radius: 10px;
-      padding: 10px 12px;
+      flex: 1; border-radius: 10px; padding: 10px 12px;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none;
     }
-    .wtitle {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 7px;
-    }
+    .wcard-top { display: flex; align-items: flex-start; gap: 8px; }
+    .wcard-top > div:first-child { flex: 1; min-width: 0; }
+    .wtitle { font-size: 14px; font-weight: 600; margin-bottom: 7px; color: #1a1a1a; }
+    .c-blue   { color: #185FA5; }
+    .c-tan    { color: #5a5a56; }
+    .c-purple { color: #3C3489; }
+    .c-mint   { color: #0A5C3A; }
     .pills { display: flex; flex-wrap: wrap; gap: 5px; }
-    .p {
-      font-size: 12px;
-      padding: 3px 9px;
-      border-radius: 99px;
-      white-space: nowrap;
-    }
+    .p { font-size: 12px; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
     .ps { background: #E6F1FB; color: #0C447C; }
     .pa { background: #EEEDFE; color: #3C3489; }
     .pl { background: #E1F5EE; color: #085041; }
     .pr { background: #F1EFE8; color: #5a5a56; }
-    .pw { background: #FAEEDA; color: #633806; }
-    .pf { background: #EAF3DE; color: #27500A; }
-
     .bg-prep { background: #EAF3FB; }
     .bg-vac  { background: #F1EFE8; }
-    .bg-sum  { background: #fff; border: 1px solid #e8e8e8; }
     .bg-ramp { background: #EEEDFE; }
-    .bg-fall { background: #EAF3DE; }
+    .bg-sum  { background: #fff; border: 1px solid #e8e8e8; }
+    .bg-solo { background: #E8F5EE; }
 
-    .divider {
-      font-size: 11px;
-      color: #bbb;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      padding: 10px 0 5px 42px;
+    /* Chevron */
+    .wchev {
+      font-size: 18px; color: #ccc; flex-shrink: 0;
+      transition: transform 0.25s ease; line-height: 1; margin-top: 1px;
     }
+    .wcard.open .wchev { transform: rotate(90deg); }
 
-    /* ── Rhythm ── */
-    .section-label {
-      font-size: 11px;
-      color: #bbb;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 10px;
+    /* Expandable detail */
+    .week-detail { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .wcard.open .week-detail { max-height: 900px; }
+    .detail-sep { height: 1px; background: rgba(0,0,0,.07); margin: 10px 0 8px; }
+    .detail-meta { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .camp-info {
+      font-size: 12px; font-weight: 500; color: #444;
+      background: rgba(0,0,0,.05); border-radius: 6px;
+      padding: 7px 10px; margin-bottom: 10px;
     }
-    .rcols {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    @media (min-width: 580px) {
-      .rcols { flex-direction: row; }
-      .rcard { flex: 1; }
-    }
-    .rcard {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 12px;
-      padding: 14px;
-    }
-    .rhead {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    .tr {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-    .tt {
-      font-size: 11px;
-      color: #bbb;
-      min-width: 52px;
-      padding-top: 2px;
-      flex-shrink: 0;
-    }
-    .tb { font-size: 13px; color: #444; line-height: 1.4; }
-    .ttag {
-      display: inline-block;
-      font-size: 11px;
-      padding: 1px 6px;
-      border-radius: 4px;
-      margin-right: 4px;
-      vertical-align: 1px;
-    }
+    .vac-note { font-size: 13px; color: #888; font-style: italic; padding: 2px 0 4px; line-height: 1.5; }
+    .dr { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 7px; }
+    .dt { font-size: 11px; color: #bbb; min-width: 60px; padding-top: 2px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .db { font-size: 13px; color: #444; line-height: 1.4; }
+    .db.dim { color: #bbb; }
+    .db.drive { color: #888; font-style: italic; }
+    .dtag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-right: 4px; vertical-align: 1px; }
 
-    /* ── Reframe ── */
-    .rlist {
-      list-style: none;
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 12px;
-    }
-    .rlist li {
-      padding: 14px 16px;
-      border-bottom: 1px solid #f0f0f0;
-      font-size: 14px;
-      color: #444;
-      line-height: 1.5;
-      display: flex;
-      gap: 12px;
-    }
+    .divider { font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: .06em; padding: 10px 0 5px 42px; }
+
+    /* Reframe */
+    .reframe-label { font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+    .rlist { list-style: none; background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+    .rlist li { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 14px; color: #444; line-height: 1.5; display: flex; gap: 12px; }
     .rlist li:last-child { border-bottom: none; }
     .ri { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    .note {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-size: 13px;
-      color: #555;
-      line-height: 1.6;
-    }
+    .note { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #555; line-height: 1.6; }
 
-    /* ── Edit mode highlighting ── */
-    [contenteditable="true"] {
-      outline: 1.5px dashed #bbb;
-      border-radius: 3px;
-      cursor: text;
-    }
-    [contenteditable="true"]:focus {
-      outline: 2px solid #4a90d9;
-      background: rgba(74,144,217,.05);
-    }
+    /* Edit mode */
+    [contenteditable="true"] { outline: 1.5px dashed #bbb; border-radius: 3px; cursor: text; }
+    [contenteditable="true"]:focus { outline: 2px solid #4a90d9; background: rgba(74,144,217,.05); }
   </style>
 </head>
 <body>
@@ -246,7 +122,6 @@
   <h1>Summer Plan 2026</h1>
   <div class="tabs">
     <button class="tab on" onclick="sw(this,'weeks')">11 Weeks</button>
-    <button class="tab" onclick="sw(this,'rhythm')">Daily Rhythm</button>
     <button class="tab" onclick="sw(this,'reframe')">New Conversation</button>
   </div>
 </div>
@@ -262,142 +137,340 @@
 </div>
 
 
-<!-- ════════════════ 11 WEEKS ════════════════ -->
+<!-- ════ 11 WEEKS ════ -->
 <div id="weeks" class="pane on">
 
+  <!-- WK 1 — PREP (school still in) -->
   <div class="wrow">
     <div class="wnum">Wk 1</div>
-    <div class="wcard bg-prep">
-      <div class="wtitle" style="color:#185FA5;">Prep &amp; close</div>
-      <div class="pills">
-        <span class="p ps">Portfolio story pass</span>
-        <span class="p pa">One app session</span>
-        <span class="p ps">Website small pass</span>
-        <span class="p pr">No new habits</span>
+    <div class="wcard bg-prep" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle c-blue">Prep &amp; close</div>
+          <div class="pills">
+            <span class="p ps">Portfolio story pass</span>
+            <span class="p pa">One app session</span>
+            <span class="p ps">Website small pass</span>
+            <span class="p pr">No new habits</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">May 26–30 · School still in session</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">9–11</div><div class="db"><span class="dtag pa">portfolio</span>Story pass + website work</div></div>
+        <div class="dr"><div class="dt">11–11:15</div><div class="db"><span class="dtag pl">piano</span>15 min (optional this week)</div></div>
+        <div class="dr"><div class="dt">11:15–1</div><div class="db"><span class="dtag pa">app</span>One session — hold the thread</div></div>
+        <div class="dr"><div class="dt">3pm+</div><div class="db">Kids home from school</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 2 — VACATION -->
   <div class="wrow">
     <div class="wnum">Wk 2</div>
-    <div class="wcard bg-vac">
-      <div class="wtitle" style="color:#5a5a56;">Vacation — full off</div>
-      <div class="pills">
-        <span class="p pr">Nothing work-adjacent</span>
-        <span class="p pr">Come back reset</span>
+    <div class="wcard bg-vac" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle c-tan">Vacation — full off</div>
+          <div class="pills">
+            <span class="p pr">Nothing work-adjacent</span>
+            <span class="p pr">Come back reset</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">June 1–7 · Family vacation</div>
+        <div class="vac-note">Full off. Nothing work-adjacent. Come back reset.</div>
       </div>
     </div>
   </div>
 
   <div class="divider">Summer begins — kids home</div>
 
+  <!-- WK 3 — HOME -->
   <div class="wrow">
     <div class="wnum">Wk 3</div>
-    <div class="wcard bg-ramp">
-      <div class="wtitle" style="color:#3C3489;">Gentle restart</div>
-      <div class="pills">
-        <span class="p pa">App daily sessions</span>
-        <span class="p ps">LinkedIn rhythm starts</span>
-        <span class="p pl">Piano 15 min/day</span>
-        <span class="p ps">2–3 applications</span>
+    <div class="wcard bg-ramp" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle c-purple">Gentle restart</div>
+          <div class="pills">
+            <span class="p pa">App daily sessions</span>
+            <span class="p ps">LinkedIn rhythm starts</span>
+            <span class="p pl">Piano 15 min/day</span>
+            <span class="p ps">2–3 applications</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">June 8–12 · Home week</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">7–8</div><div class="db">Help kids settle, exercise if possible</div></div>
+        <div class="dr"><div class="dt">~8</div><div class="db">Kids occupied — window opens</div></div>
+        <div class="dr"><div class="dt">8–10</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">10–10:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">10:15–12</div><div class="db"><span class="dtag ps">job</span>Light tasks — interruptible ok</div></div>
+        <div class="dr"><div class="dt">12+</div><div class="db">Lunch together, flex afternoon</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 4 — CAMP (Camp 510, 9am–3pm) -->
   <div class="wrow">
     <div class="wnum">Wk 4</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Settle in</div>
-      <div class="pills">
-        <span class="p pa">App: first milestone</span>
-        <span class="p ps">1 post, 2 comments</span>
-        <span class="p pl">+ one creative hobby</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Settle in</div>
+          <div class="pills">
+            <span class="p pa">App: first milestone</span>
+            <span class="p ps">1 post, 2 comments</span>
+            <span class="p pl">+ one creative hobby</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">June 15–19 · Camp week</div>
+        <div class="camp-info">Clayton · Camp 510 Glass Mosaics · 9am–3pm</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">by 8:30</div><div class="db">Exercise + ready</div></div>
+        <div class="dr"><div class="dt">8:45</div><div class="db drive">Drop off Clayton → Camp 510 (9am)</div></div>
+        <div class="dr"><div class="dt">9–11</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">11–11:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">11:15–12:30</div><div class="db"><span class="dtag ps">job</span>Apps, research, LinkedIn</div></div>
+        <div class="dr"><div class="dt">12:30–1:30</div><div class="db">Lunch, walk, off-screen</div></div>
+        <div class="dr"><div class="dt">1:30–2:45</div><div class="db"><span class="dtag pl">open</span>Creative, calls, reading</div></div>
+        <div class="dr"><div class="dt">2:45</div><div class="db drive">Leave for pickup → Camp 510 (3pm)</div></div>
+        <div class="dr"><div class="dt">3pm+</div><div class="db">Kids home — family</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 5 — HOME -->
   <div class="wrow">
     <div class="wnum">Wk 5</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Steady</div>
-      <div class="pills">
-        <span class="p pa">App progress post</span>
-        <span class="p ps">M/W/F job rhythm</span>
-        <span class="p pl">Piano continues</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Steady</div>
+          <div class="pills">
+            <span class="p pa">App progress post</span>
+            <span class="p ps">M/W/F job rhythm</span>
+            <span class="p pl">Piano continues</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">June 22–26 · Home week</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">7–8</div><div class="db">Help kids settle, exercise if possible</div></div>
+        <div class="dr"><div class="dt">~8</div><div class="db">Kids occupied — window opens</div></div>
+        <div class="dr"><div class="dt">8–10</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">10–10:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">10:15–12</div><div class="db"><span class="dtag ps">job</span>Light tasks — interruptible ok</div></div>
+        <div class="dr"><div class="dt">12+</div><div class="db">Lunch together, flex afternoon</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 6 — CAMP (Trackers, 9:30–2:30, Bushrod) -->
   <div class="wrow">
     <div class="wnum">Wk 6</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Steady</div>
-      <div class="pills">
-        <span class="p pa">App: second milestone</span>
-        <span class="p ps">Portfolio signal check</span>
-        <span class="p pl">Creative continues</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Steady</div>
+          <div class="pills">
+            <span class="p pa">App: second milestone</span>
+            <span class="p ps">Portfolio signal check</span>
+            <span class="p pl">Creative continues</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">June 29–July 3 · Camp week</div>
+        <div class="camp-info">Clayton · Trackers Rangers Recon · 9:30–2:30 · Bushrod</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">by 9</div><div class="db">Exercise + ready</div></div>
+        <div class="dr"><div class="dt">9:15</div><div class="db drive">Drop off Clayton → Bushrod (9:30)</div></div>
+        <div class="dr"><div class="dt">9:30–11:30</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">11:30–11:45</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">11:45–12:30</div><div class="db"><span class="dtag ps">job</span>Apps, research, LinkedIn</div></div>
+        <div class="dr"><div class="dt">12:30–1:30</div><div class="db">Lunch, walk, off-screen</div></div>
+        <div class="dr"><div class="dt">1:30–2:15</div><div class="db"><span class="dtag pl">open</span>Creative, calls, reading</div></div>
+        <div class="dr"><div class="dt">2:15</div><div class="db drive">Leave for pickup → Bushrod (2:30)</div></div>
+        <div class="dr"><div class="dt">2:30+</div><div class="db">Kids home — afternoon</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 7 — CAMP (TKH, 9am–3:30pm, Aurora) -->
   <div class="wrow">
     <div class="wnum">Wk 7</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Steady</div>
-      <div class="pills">
-        <span class="p pa">App: third milestone</span>
-        <span class="p ps">Warm contact outreach</span>
-        <span class="p pl">Creative continues</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Steady</div>
+          <div class="pills">
+            <span class="p pa">App: third milestone</span>
+            <span class="p ps">Warm contact outreach</span>
+            <span class="p pl">Creative continues</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">July 6–10 · Camp week</div>
+        <div class="camp-info">Clayton · TKH Camp (Roblox &amp; Minecraft) · 9am–3:30pm · Aurora</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">by 8:30</div><div class="db">Exercise + ready</div></div>
+        <div class="dr"><div class="dt">8:45</div><div class="db drive">Drop off Clayton → Aurora (9am)</div></div>
+        <div class="dr"><div class="dt">9–11</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">11–11:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">11:15–12:30</div><div class="db"><span class="dtag ps">job</span>Apps, research, LinkedIn</div></div>
+        <div class="dr"><div class="dt">12:30–1:30</div><div class="db">Lunch, walk, off-screen</div></div>
+        <div class="dr"><div class="dt">1:30–3:15</div><div class="db"><span class="dtag pl">open</span>Creative, calls, reading</div></div>
+        <div class="dr"><div class="dt">3:15</div><div class="db drive">Leave for pickup → Aurora (3:30)</div></div>
+        <div class="dr"><div class="dt">3:30+</div><div class="db">Kids home — family</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 8 — HOME -->
   <div class="wrow">
     <div class="wnum">Wk 8</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Build toward fall</div>
-      <div class="pills">
-        <span class="p pa">App: shareable?</span>
-        <span class="p ps">LinkedIn more proactive</span>
-        <span class="p ps">Resume refresh if needed</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Build toward fall</div>
+          <div class="pills">
+            <span class="p pa">App: shareable?</span>
+            <span class="p ps">LinkedIn more proactive</span>
+            <span class="p ps">Resume refresh if needed</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">July 13–17 · Home week</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">7–8</div><div class="db">Help kids settle, exercise if possible</div></div>
+        <div class="dr"><div class="dt">~8</div><div class="db">Kids occupied — window opens</div></div>
+        <div class="dr"><div class="dt">8–10</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">10–10:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">10:15–12</div><div class="db"><span class="dtag ps">job</span>Light tasks — interruptible ok</div></div>
+        <div class="dr"><div class="dt">12+</div><div class="db">Lunch together, flex afternoon</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 9 — SOLO (Camp Campbell, overnight all week) -->
   <div class="wrow">
     <div class="wnum">Wk 9</div>
-    <div class="wcard bg-sum">
-      <div class="wtitle">Pre-fall prep</div>
-      <div class="pills">
-        <span class="p ps">What's working? Evaluate</span>
-        <span class="p pa">App: document for LinkedIn</span>
-        <span class="p ps">More active outreach</span>
+    <div class="wcard bg-solo" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle c-mint">Solo window</div>
+          <div class="pills">
+            <span class="p pa">App: document for LinkedIn</span>
+            <span class="p ps">Active outreach</span>
+            <span class="p pl">Full deep work windows</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">July 19–24 · Clayton at sleepaway camp all week</div>
+        <div class="camp-info">Clayton · Camp Campbell · Overnight · Away all week — no drop-off/pickup</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">by 9</div><div class="db">Exercise + ready (no morning rush)</div></div>
+        <div class="dr"><div class="dt">9–11:30</div><div class="db"><span class="dtag pa">deep work</span>Extended app session</div></div>
+        <div class="dr"><div class="dt">11:30–11:45</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">11:45–1:30</div><div class="db"><span class="dtag ps">job</span>Apps, outreach, LinkedIn</div></div>
+        <div class="dr"><div class="dt">1:30–3</div><div class="db"><span class="dtag pl">open</span>Creative, calls, reading</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
+  <!-- WK 10 — CAMP (TheCoder School, 9am–3pm, Berkeley) -->
   <div class="wrow">
     <div class="wnum">Wk 10</div>
-    <div class="wcard bg-vac">
-      <div class="wtitle" style="color:#5a5a56;">Second vacation (5 days)</div>
-      <div class="pills">
-        <span class="p pr">Full off</span>
-        <span class="p pl">Piano fine to keep up casually</span>
+    <div class="wcard bg-sum" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle">Pre-fall prep</div>
+          <div class="pills">
+            <span class="p ps">What's working? Evaluate</span>
+            <span class="p pa">App: visible &amp; talkable</span>
+            <span class="p ps">Recruiter follow-ups</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">July 27–31 · Camp week</div>
+        <div class="camp-info">Clayton · TheCoder School (Rise of the Machines) · 9am–3pm · Berkeley</div>
+        <div class="dr"><div class="dt">6–6:30</div><div class="db">Wake, coffee, slow start</div></div>
+        <div class="dr"><div class="dt">by 8:30</div><div class="db">Exercise + ready</div></div>
+        <div class="dr"><div class="dt">8:45</div><div class="db drive">Drop off Clayton → Berkeley (9am)</div></div>
+        <div class="dr"><div class="dt">9–11</div><div class="db"><span class="dtag pa">deep work</span>App session</div></div>
+        <div class="dr"><div class="dt">11–11:15</div><div class="db"><span class="dtag pl">piano</span>15 min</div></div>
+        <div class="dr"><div class="dt">11:15–12:30</div><div class="db"><span class="dtag ps">job</span>Outreach, follow-ups, evaluate</div></div>
+        <div class="dr"><div class="dt">12:30–1:30</div><div class="db">Lunch, walk, off-screen</div></div>
+        <div class="dr"><div class="dt">1:30–2:45</div><div class="db"><span class="dtag pl">open</span>Creative, calls, reading</div></div>
+        <div class="dr"><div class="dt">2:45</div><div class="db drive">Leave for pickup → Berkeley (3pm)</div></div>
+        <div class="dr"><div class="dt">3pm+</div><div class="db">Kids home — family</div></div>
+        <div class="dr"><div class="dt">5pm</div><div class="db dim">Work closes. No checking.</div></div>
       </div>
     </div>
   </div>
 
-  <div class="divider">Early August — fall season opens</div>
+  <div class="divider">Early August — school starts Aug 10</div>
 
+  <!-- WK 11 — VACATION (Oregon trip) -->
   <div class="wrow">
     <div class="wnum">Wk 11</div>
-    <div class="wcard bg-fall">
-      <div class="wtitle" style="color:#27500A;">Fall ready</div>
-      <div class="pills">
-        <span class="p ps">Active outreach</span>
-        <span class="p ps">Recruiter follow-ups</span>
-        <span class="p pa">App: visible &amp; talkable</span>
-        <span class="p pl">Rhythms all in place</span>
+    <div class="wcard bg-vac" onclick="toggleWeek(this)">
+      <div class="wcard-top">
+        <div>
+          <div class="wtitle c-tan">Oregon trip</div>
+          <div class="pills">
+            <span class="p pr">Full off</span>
+            <span class="p pr">School registration</span>
+            <span class="p pl">Piano fine to keep up casually</span>
+          </div>
+        </div>
+        <div class="wchev">›</div>
+      </div>
+      <div class="week-detail">
+        <div class="detail-sep"></div>
+        <div class="detail-meta">Aug 3–7 · Family trip · School starts Aug 10</div>
+        <div class="vac-note">Full off. Oregon trip + school registration. Come back ready for fall.</div>
       </div>
     </div>
   </div>
@@ -405,44 +478,9 @@
 </div>
 
 
-<!-- ════════════════ DAILY RHYTHM ════════════════ -->
-<div id="rhythm" class="pane">
-  <div class="section-label">Two modes — same structure, shifted window</div>
-  <div class="rcols">
-
-    <div class="rcard">
-      <div class="rhead">Camp weeks</div>
-      <div class="tr"><div class="tt">6–6:30</div><div class="tb">Wake, coffee, slow start</div></div>
-      <div class="tr"><div class="tt">by 9</div><div class="tb">Exercise + shower done</div></div>
-      <div class="tr"><div class="tt">9–11</div><div class="tb"><span class="ttag pa">deep work</span>App session</div></div>
-      <div class="tr"><div class="tt">11–11:15</div><div class="tb"><span class="ttag pl">piano</span>15 min</div></div>
-      <div class="tr"><div class="tt">11:15–12:30</div><div class="tb"><span class="ttag ps">job</span>Apps, research, LinkedIn</div></div>
-      <div class="tr"><div class="tt">12:30–1:30</div><div class="tb">Lunch, walk, off-screen</div></div>
-      <div class="tr"><div class="tt">1:30–3</div><div class="tb"><span class="ttag pl">open</span>Creative, calls, reading</div></div>
-      <div class="tr"><div class="tt">3pm+</div><div class="tb">Kids home — family</div></div>
-      <div class="tr"><div class="tt">5pm</div><div class="tb" style="color:#bbb;">Work closes. No checking.</div></div>
-    </div>
-
-    <div class="rcard">
-      <div class="rhead">Home weeks</div>
-      <div class="tr"><div class="tt">6–6:30</div><div class="tb">Wake, coffee, slow start</div></div>
-      <div class="tr"><div class="tt">7–8</div><div class="tb">Help kids settle, exercise if possible</div></div>
-      <div class="tr"><div class="tt">~8</div><div class="tb">Son on iPad — your window opens</div></div>
-      <div class="tr"><div class="tt">8–10</div><div class="tb"><span class="ttag pa">deep work</span>App session</div></div>
-      <div class="tr"><div class="tt">10–10:15</div><div class="tb"><span class="ttag pl">piano</span>15 min while he's occupied</div></div>
-      <div class="tr"><div class="tt">10:15–12</div><div class="tb"><span class="ttag ps">job</span>Light tasks — interruptible ok</div></div>
-      <div class="tr"><div class="tt">12+</div><div class="tb">Lunch together, flex afternoon</div></div>
-      <div class="tr"><div class="tt">afternoons</div><div class="tb" style="color:#bbb;">Kid logistics, creative if energy allows</div></div>
-      <div class="tr"><div class="tt">5pm</div><div class="tb" style="color:#bbb;">Work closes. No checking.</div></div>
-    </div>
-
-  </div>
-  <div class="note">Job tasks on home weeks go in the interruptible morning slot — not deep work. Deep work is protected in both modes. If a good conversation is actively in play, that slot expands slightly; the app session shrinks but doesn't disappear.</div>
-</div>
-
-
-<!-- ════════════════ NEW CONVERSATION ════════════════ -->
+<!-- ════ NEW CONVERSATION ════ -->
 <div id="reframe" class="pane">
+  <div class="reframe-label">A frame to carry into any new hiring conversation</div>
   <ul class="rlist">
     <li><div class="ri">🛡</div><div><strong style="font-weight:600;color:#1a1a1a;">Mornings are protected by default.</strong> A recruiter email at 9am gets a reply at 10:30 or noon. Nothing is so urgent it can't wait 90 minutes.</div></li>
     <li><div class="ri">⏱</div><div><strong style="font-weight:600;color:#1a1a1a;">2 hours/day is the ceiling</strong> for job prep, research, and follow-up — unless you consciously call a surge day.</div></li>
@@ -463,9 +501,19 @@ function sw(btn, id) {
   btn.classList.add('on');
 }
 
-var EDITABLE = '.wtitle, .p, .tb, .divider, .section-label, .rhead, .tt, .rlist li div, .note';
+var editing = false;
+
+function toggleWeek(card) {
+  if (editing) return;
+  card.classList.toggle('open');
+}
+
+var EDITABLE = '.wtitle, .p, .db, .dt, .camp-info, .vac-note, .note, .rlist li div, .divider, .detail-meta';
 
 function startEditing() {
+  editing = true;
+  // Open all weeks so content is reachable
+  document.querySelectorAll('.wcard').forEach(c => c.classList.add('open'));
   document.querySelectorAll(EDITABLE).forEach(el => el.contentEditable = 'true');
   document.getElementById('edit-banner').classList.add('on');
   document.getElementById('edit-btn').style.display = 'none';
@@ -473,6 +521,7 @@ function startEditing() {
 }
 
 function doneEditing() {
+  editing = false;
   document.querySelectorAll(EDITABLE).forEach(el => el.contentEditable = 'false');
   document.getElementById('edit-banner').classList.remove('on');
   document.getElementById('edit-btn').style.display = '';
@@ -481,8 +530,9 @@ function doneEditing() {
 
 function downloadPage() {
   var clone = document.documentElement.cloneNode(true);
-  // Remove the save button from the clone so the downloaded copy starts fresh
   clone.querySelector('#save-btn').style.display = 'none';
+  // Close all expanded weeks in the saved copy
+  clone.querySelectorAll('.wcard.open').forEach(c => c.classList.remove('open'));
   var html = '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
   var blob = new Blob([html], { type: 'text/html' });
   var a = document.createElement('a');
